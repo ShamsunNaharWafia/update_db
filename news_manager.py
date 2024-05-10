@@ -100,14 +100,14 @@ def create_tables(connection):
     CREATE TABLE IF NOT EXISTS reporters (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL
+        email VARCHAR(255)  NOT NULL
     );
     """
     create_publishers_table = """
     CREATE TABLE IF NOT EXISTS publishers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) UNIQUE NOT NULL
+        email VARCHAR(255)  NOT NULL
     );
     """
     create_news_table = """

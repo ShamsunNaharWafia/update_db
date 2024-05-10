@@ -90,7 +90,7 @@ def insert_reporter(connection, name, email):
         The connection object to the database.
     name : str
         The name of the reporter.
-    email : str
+    email : varchar
         The email of the reporter.
 
     Returns
@@ -114,7 +114,7 @@ def insert_publisher(connection, name, email):
         The connection object to the database.
     name : str
         The name of the publisher.
-    email : str
+    email : varchar
         The email of the publisher.
 
     Returns
@@ -216,6 +216,6 @@ if __name__ == "__main__":
     if conn is not None:
         insert_category(conn, "Politics", "All first related to politics")
         insert_category(conn, "Economics", "All first related to economics")
-        insert_reporter(conn, "John Doe", "test@example.com")
-        insert_reporter(conn, "Jonny Dep", "jonnydep@example.com")
+        insert_publisher(conn, "jonny" , "jonny@mial.com")
+        
         # Add more insert calls for other tables
