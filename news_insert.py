@@ -116,21 +116,29 @@ def insert_publisher(connection, name, email):
         The name of the publisher.
     email : varchar
         The email of the publisher.
+    phone_number : int
+        The phone_number of the publisher.
+    head_office_address : varchar
+        The head_office_address of the publisher.
+    facebook : varchar
+        The facebook of the publisher.
+    twitter : varchar
+        The twitter of the publisher.
 
     Returns
     -------
     None
     """
     query = """
-    INSERT INTO publishers (name, email)
-    VALUES (%s, %s)
+    INSERT INTO publishers (name, email, phone_number, head_office_address, facebook, twitter)
+    VALUES (%s, %s, %d, %s, %s, %s)
     """
-    data = (name, email)
+    data = (name, email, phone_number, head_office_address, facebook, twitter)
     execute_query(connection, query, data)
 
-def insert_first(connection, category_id, reporter_id, publisher_id, datetime, title, body, link):
+def insert_news(connection, category_id, reporter_id, publisher_id, datetime, title, body, link):
     """
-    Inserts a new first article into the first table.
+    Inserts a new news article into the news table.
 
     Parameters
     ----------
@@ -143,26 +151,26 @@ def insert_first(connection, category_id, reporter_id, publisher_id, datetime, t
     publisher_id : int
         The ID of the publisher.
     datetime : datetime
-        The publication date and time of the first article.
+        The publication date and time of the news article.
     title : str
-        The title of the first article.
+        The title of the news article.
     body : str
-        The body text of the first article.
+        The body text of the news article.
     link : str
-        The URL link to the full first article.
+        The URL link to the full news article.
 
     Returns
     -------
     None
     """
     query = """
-    INSERT INTO first (category_id, reporter_id, publisher_id, datetime, title, body, link)
+    INSERT INTO news (category_id, reporter_id, publisher_id, datetime, title, body, link)
     VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
     data = (category_id, reporter_id, publisher_id, datetime, title, body, link)
     execute_query(connection, query, data)
 
-def insert_image(connection, first_id, image_url):
+def insert_image(connection, news_id, image_url):
     """
     Inserts a new image into the images table.
 
@@ -170,8 +178,8 @@ def insert_image(connection, first_id, image_url):
     ----------
     connection : mysql.connector.connection.MySQLConnection
         The connection object to the database.
-    first_id : int
-        The ID of the first article associated with the image.
+    news_id : int
+        The ID of the news article associated with the image.
     image_url : str
         The URL of the image.
 
@@ -180,13 +188,13 @@ def insert_image(connection, first_id, image_url):
     None
     """
     query = """
-    INSERT INTO images (first_id, image_url)
+    INSERT INTO images (news_id, image_url)
     VALUES (%s, %s)
     """
-    data = (first_id, image_url)
+    data = (news_id, image_url)
     execute_query(connection, query, data)
 
-def insert_summary(connection, first_id, summary_text):
+def insert_summary(connection, news_id, summary_text):
     """
     Inserts a new summary into the summaries table.
 
@@ -194,8 +202,8 @@ def insert_summary(connection, first_id, summary_text):
     ----------
     connection : mysql.connector.connection.MySQLConnection
         The connection object to the database.
-    first_id : int
-        The ID of the first article associated with the summary.
+    news_id : int
+        The ID of the news article associated with the summary.
     summary_text : str
         The text of the summary.
 
@@ -204,18 +212,24 @@ def insert_summary(connection, first_id, summary_text):
     None
     """
     query = """
-    INSERT INTO summaries (first_id, summary_text)
+    INSERT INTO summaries (news_id, summary_text)
     VALUES (%s, %s)
     """
-    data = (first_id, summary_text)
+    data = (news_id,  summary_text)
     execute_query(connection, query, data)
 
 # Example usage
 if __name__ == "__main__":
     conn = create_db_connection()
     if conn is not None:
-        insert_category(conn, "Politics", "All first related to politics")
-        insert_category(conn, "Economics", "All first related to economics")
-        insert_publisher(conn, "jonny" , "jonny@mial.com")
+        insert_category(conn, "Politics", "All news related to politics")
+        insert_reporter(conn, "jonny" , "jonny@mial.com")
+        insert_news(conn, "4","4","1", "2024-05-08 23:29","Head, Abishek power Hyderabad to victory over Lucknow inside 10 overs",
+                    """Openers Travis Head and Abhishek Sharma smoked half-centuries as Sunrisers Hyderabad crushed Lucknow Super Giants by 10 wickets on Wednesday 
+                    to boost their play-off hopes in the IPL.""", 
+                    "https://www.thedailystar.net/sports/cricket/news/head-abishek-power-hyderabad-victory-over-lucknow-inside-10-overs-3605301")
+        
+        insert_image( conn, "1", "https://tds-images.thedailystar.net/sites/default/files/styles/big_202/public/images/2024/05/08/afp_20240508_34r89pa_v1_preview_cricketindiplt20hyderabadlucknow.jpg")
+        insert_summary(conn, "2" , """ a weather bulletin issued this morning.The country's maximum temperature yesterday was recorded at 35 degrees Celsius at Khepupara.""")
         
         # Add more insert calls for other tables

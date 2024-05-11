@@ -107,7 +107,12 @@ def create_tables(connection):
     CREATE TABLE IF NOT EXISTS publishers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
-        email VARCHAR(255)  NOT NULL
+        email VARCHAR(255)  NOT NULL,
+        phone_number INT(255)  NOT NULL,
+        head_office_address VARCHAR(255)  NOT NULL,
+        website VARCHAR(255)  NOT NULL,
+        facebook VARCHAR(255),
+        twitter VARCHAR(255)  
     );
     """
     create_news_table = """
@@ -138,7 +143,6 @@ def create_tables(connection):
     CREATE TABLE IF NOT EXISTS summaries (
         id INT AUTO_INCREMENT PRIMARY KEY,
         news_id INT,
-        image_url VARCHAR(255),
         summary_text TEXT,
         FOREIGN KEY (news_id) REFERENCES news (id)
     );
